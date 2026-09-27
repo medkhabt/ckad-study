@@ -77,4 +77,5 @@ to configure one must:
 K8s models persistent data with help of two primitives: `PersistentVolume` and `PersistentVolumeClaim`.
 - PersistentVolume: represent in k8s the single storage resource. It describs the source of the storage. A storage can be assigned by mapping to a storage class (TODO: need more info here).
 - PersistentVolumeClaim: Requests the resource of PersistentVolume. If I understand correctly it basically rents/claims the PersisentVolume resource so no other pod use it ?
+One gotcha: the PersistentVolumeClaim Resource is namespace scoped ( not like PersistentVolume resource )
 
