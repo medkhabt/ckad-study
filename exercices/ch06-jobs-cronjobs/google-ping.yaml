@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: google-ping
+  namespace: ckad
+spec:
+  # if a job didn't finish before the new job , the new job get cancelled
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 7
+  jobTemplate:
+    metadata:
+      name: google-ping
+    spec:
+      template:
+        spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - curl google.com
+            image: alpine/curl:8.22.0
+            name: google-ping
+          restartPolicy: OnFailure
+  schedule: '*/2 * * * *'

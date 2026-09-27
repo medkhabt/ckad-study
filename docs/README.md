@@ -41,7 +41,12 @@ the cronjobs and their jobs and their pods are easily matched, they all start wi
 then a hash for the pod. pod label: [cron label]-[job cron time]-[hash] 
 
 One good thing about having a cron is that it proposes a better clean up policy to be able to inspect old job runs without affecting the performance of the cluster. 
-By default it keeps the last three sucessful pods and the last failed pod. One can change this limit using `spec.fulJobsHistoryLimit` and `spec.failedJobsHistoryLimit`. 
+By default it keeps the last three sucessful pods and the last failed pod. One can change this limit using `spec.fullJobsHistoryLimit` and `spec.failedJobsHistoryLimit`. 
+
+The book says that there exists `spec.fullJobsHistoryLimit` but the current version of the CronJob resource has `spec.succesfulJobsHistoryLimit` and `spec.failedJobsHistoryLimit` instead.
+
+### Jobs and restart behavior
+I noticed that creating the cronjob object, it specifis that the container run on the job object has a restart policy of restart on failure.
 
 ## usefull commands
 - `kubectl get jobs` 
