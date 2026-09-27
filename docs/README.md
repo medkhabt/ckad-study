@@ -52,3 +52,29 @@ I noticed that creating the cronjob object, it specifis that the container run o
 - `kubectl get jobs` 
 - `kubectl create job [name] --image=[image] -- [command]` and i guess one can run it in dry-mode and generate the yaml file.
 - `kubectl create cronjob [name] --schedule=[cron schedule]" --image=[image] -- [command]` so the only diff to job creationg is that it has a --schedule ( or at least for the simplest config )  
+
+# Volumes
+## Relevant Volume types
+- emptyDir: empty directory in the pod with read/write access. Lifespan of volume = Lifespan of pod. 
+    * usage:
+        - cache implementations
+        - data exchange between containres of the pod.
+- hostPath: (Not meant for production!) file/dir from host node's filesystem. Supported only in single node clusters. 
+    * usage: 
+        - I guess it's good for ci.
+- configMap, secret: 
+    * usage: inject configuration data.
+- nfs: Network file system share ( accessing a file on a remote machine over a network as if those files where on the local filesystem ), preserve data after pod restart.
+- persistentVolumeClaim: Claims a persistent volume.
+## Ephemeral volumes
+Ephemeral Volume lifespan equals the Pod lifespan. Useful when we want shared memory between containers of a pod. 
+During a restart of a pod, the data in the ephemeral volume is lost since it will create a new volume on the restart.
+
+to configure one must:
+- Add the volume to `spec.volumes[]`. You provide a name and type. 
+- The volume needs to be mounted on a container to a specific path, configured via `spec.containers[].volumeMounts[]`( the name must match the volume name ).
+## Persistent Volumes
+K8s models persistent data with help of two primitives: `PersistentVolume` and `PersistentVolumeClaim`.
+- PersistentVolume: represent in k8s the single storage resource. It describs the source of the storage. A storage can be assigned by mapping to a storage class (TODO: need more info here).
+- PersistentVolumeClaim: Requests the resource of PersistentVolume. If I understand correctly it basically rents/claims the PersisentVolume resource so no other pod use it ?
+
