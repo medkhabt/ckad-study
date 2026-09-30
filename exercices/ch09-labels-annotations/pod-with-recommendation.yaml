@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-recommendation
+  namespace: ckad
+  labels:
+    app.kubernetes.io/name: F5-nginx
+    app.kubernetes.io/managed-by: Helm
+spec:
+  containers:
+    - image: nginx:1.25.1
+      name: pod-with-recommendation
