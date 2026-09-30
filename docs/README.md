@@ -81,3 +81,19 @@ One gotcha: the PersistentVolumeClaim Resource is namespace scoped ( not like Pe
 
 # Multi-container pods
 to chose which container to log or to run exec on, one should specify the container name with the argument `-c/--container`.
+
+# Deployments
+## The difference between ReplicaSet and Deployment
+In my current understanding, a ReplicatSet manages n identical pods with the same template ( desired state of the pods ) and same labels.
+The Deployment is responsible for updating the ReplicatSet if the desired state changes or the labels changes. It creates a new ReplicaSet
+object that manages the pods with the new template and label set.
+## Rollout 
+- `kubectl rollout status deployment []`
+- `kubectl rollout history deployment []`
+- To add a change cause for the revision, one can add annotation `kubernetes.io/change-cause` with a message. `kubectl annotate deployment backend kubernetes.io/change-cause="[]"` 
+- `kubectl rollout undo deploymet [] --to-revision=[int]`
+## ReplicaSets
+one observation is that after a rollout update the old replicaset still exists in the namespace, just with no replicas up. I had 
+the question if maybe just one old replica stays in the namespace, but after testing an other rollout update, i had two old replicasets
+still existing (maybe there is a limit to this).
+

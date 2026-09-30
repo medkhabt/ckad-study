@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    name: backend
+    test: deployment
+  namespace: ckad
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      # replicaset pod bind
+      tier: backend
+  template:  # think of it as the root of a pod yaml file.
+    metadata:
+      name: nginx
+      # pod labels
+      labels:
+        tier: backend
+        app: v1
+      namespace: ckad
+    spec:
+      containers:
+        - image: nginx:1.23.2
+          name: nginx
