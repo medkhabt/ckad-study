@@ -79,3 +79,5 @@ K8s models persistent data with help of two primitives: `PersistentVolume` and `
 - PersistentVolumeClaim: Requests the resource of PersistentVolume. If I understand correctly it basically rents/claims the PersisentVolume resource so no other pod use it ?
 One gotcha: the PersistentVolumeClaim Resource is namespace scoped ( not like PersistentVolume resource )
 
+# Multi-container pods
+to chose which container to log or to run exec on, one should specify the container name with the argument `-c/--container`.
