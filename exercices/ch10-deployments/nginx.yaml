@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: ckad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx
+      namespace: ckad
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx:1.23.4
+          name: nginx
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 500Mi
+            limits:
+              memory: 500Mi

@@ -96,4 +96,15 @@ object that manages the pods with the new template and label set.
 one observation is that after a rollout update the old replicaset still exists in the namespace, just with no replicas up. I had 
 the question if maybe just one old replica stays in the namespace, but after testing an other rollout update, i had two old replicasets
 still existing (maybe there is a limit to this).
-
+## Horizental Pod Autoscaler
+HPA objects interact with the metrics server, so it should be installed on the cluster to benefit from the HPA features.
+To do so 
+`kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml`
+or via helm, i did it using helm 
+```bash
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm upgrade --install metrics-server metrics-server/metrics-server
+```
+I had certificate aknowldegment issues ( TODO, fix the issue instead of dodging the issue, it has to do with the subject of the certifcate
+presented by the kubelet and the private ip address that is used by the metrics-server to call the kubelet )
+`helm upgrade metrics-server metrics-server/metrics-sever --set 'args[0]=--kubelet-insecure-tls'`
