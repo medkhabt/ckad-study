@@ -108,3 +108,4 @@ helm upgrade --install metrics-server metrics-server/metrics-server
 I had certificate aknowldegment issues ( TODO, fix the issue instead of dodging the issue, it has to do with the subject of the certifcate
 presented by the kubelet and the private ip address that is used by the metrics-server to call the kubelet )
 `helm upgrade metrics-server metrics-server/metrics-sever --set 'args[0]=--kubelet-insecure-tls'`
+
